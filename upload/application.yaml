@@ -1,0 +1,64 @@
+apt:
+  tracing:
+    enabled: false
+  web:
+    name: Database Synchronizer
+    recognizedHosts: rest-api.apt*.ca*
+hibernate:
+  jdbc:
+    batch_size: 100
+spring:
+  datasource:
+    hikari:
+      connectionTimeout: 60000
+      idleTimeout: 600000
+      maxLifetime: 1680000
+      minimumIdle: 2
+      maximumPoolSize: 10
+      cachePrepStmts: true
+      prepStmtCacheSize: 250
+      prepStmtCacheSqlLimit: 2048
+      useServerPrepStmts: true
+      useLocalSessionState: true
+      rewriteBatchedStatements: true
+      cacheResultSetMetadata: true
+      cacheServerConfiguration: true
+  hibernate:
+    dialect: org.hibernate.dialect.MySQL5Dialect
+  jpa:
+    properties:
+      hibernate:
+        format_sql: false
+        generate_statistics: false
+        order_inserts: true
+        order_updates: true
+        hbm2ddl:
+          auto: none
+        jdbc:
+          batch_size: 100
+        show_sql: false
+      javax:
+        persistence:
+          sharedCache:
+            mode: ALL
+  main:
+    allow-bean-definition-overriding: true
+    web-application-type: NONE
+  primary:
+    datasource:
+      port: ${DATABASE_PORT}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      password: ${DATABASE_PASSWORD}
+      username: ${DATABASE_USERNAME}
+      jdbc-url: jdbc:mysql://${PRIMARY_DATABASE_URL}
+  replica:    
+    datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      password: ${DATABASE_PASSWORD}
+      username: ${DATABASE_USERNAME}
+      jdbc-url: jdbc:mysql://${SECONDARY_DATABASE_URL}
+      port: ${DATABASE_PORT}
+#DB connection parameters
+ssl: useSSL=true
+tls:
+  protocol: enabledTLSProtocols=TLSv1.2      
